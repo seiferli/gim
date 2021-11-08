@@ -1,0 +1,123 @@
+
+serverversion: 1.0.0
+
+#---------------Infrastructure configuration---------------------#
+etcd:
+  etcdSchema: mxim
+  etcdAddr: [ 127.0.0.1:2379 ]
+
+mysql:
+  dbMysqlAddress: [ 127.0.0.1:3306 ]
+  dbMysqlUserName: root
+  dbMysqlPassword: mxim
+  dbMysqlDatabaseName: mxim
+  dbTableName: eMsg
+  dbMsgTableNum: 1
+  dbMaxOpenConns: 20
+  dbMaxIdleConns: 10
+  dbMaxLifeTime: 120
+
+mongo:
+  dbAddress: [ 127.0.0.1:27017 ]
+  dbDirect: false
+  dbTimeout: 10
+  dbDatabase: mxim
+  dbSource: admin
+  dbUserName:
+  dbPassword:
+  dbMaxPoolSize: 20
+  dbRetainChatRecords: 7
+
+redis:
+  dbAddress: 127.0.0.1:6379
+  dbMaxIdle: 128
+  dbMaxActive: 0
+  dbIdleTimeout: 120
+  dbPassWord: mxim
+
+kafka:
+  ws2mschat:
+    addr: [ 127.0.0.1:9092 ]
+    topic: "ws2ms_chat"
+  ms2pschat:
+    addr: [ 127.0.0.1:9092 ]
+    topic: "ms2ps_chat"
+  consumergroupid:
+    msgToMongo: mongo
+    msgToMySql: mysql
+    msgToPush: push
+
+
+
+#---------------Internal service configuration---------------------#
+
+# The service ip default is empty,
+# automatically obtain the machine's valid network card ip as the service ip,
+# otherwise the configuration ip is preferred
+serverip:
+
+api:
+  restApiPort: [ 10000 ]
+#sdk:
+#  clientSdkWsPort: [ 30000 ]
+
+rpcport:
+  rpcAuthPort: [ 10600 ]
+
+rpcregistername:
+  rpcAuthName: Auth
+
+log:
+  storageLocation: ../logs/
+  rotationTime: 24
+  remainRotationCount: 5
+  remainLogLevel: 6
+  elasticSearchSwitch: false
+  elasticSearchAddr: [ 127.0.0.1:9201 ]
+  elasticSearchUser: ""
+  elasticSearchPassword: ""
+
+modulename:
+  longConnSvrName: gConnGW
+  msgTransferName: gMsgTransfer
+  pushName: gPushServer
+
+longconnsvr:
+  wsPort: [ 17778 ]
+  websocketMaxConnNum: 10000
+  websocketMaxMsgLen: 4096
+  websocketTimeOut: 10
+
+push:
+  tpns:
+    ios:
+      accessID:
+      secretKey:
+    android:
+      accessID:
+      secretKey:
+  jpns:
+    appKey:
+    masterSecret:
+    pushUrl: "https://api.jpush.cn/v3/push"
+manager:
+  appManagerUid: [""]
+  secrets: [""]
+
+secret: gmx-im
+
+multiloginpolicy:
+  onlyOneTerminalAccess: false
+  mobileAndPCTerminalAccessButOtherTerminalKickEachOther: true
+  allTerminalAccess: false
+
+#token config
+tokenpolicy:
+  accessSecret: "mx_im"
+  # Token effective time seconds as a unit
+  #Seven days   7*24*60*60
+  accessExpire: 604800
+
+messagecallback:
+  callbackSwitch: false
+  callbackUrl: "http://www.xxx.com/msg/judge"
